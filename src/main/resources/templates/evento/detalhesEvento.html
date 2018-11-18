@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<title>EventosApp</title>
+
+<meta charset="UTF-8" />
+<meta name="description" content="Free Web tutorials" />
+<meta name="keywords" content="HTML,CSS,XML,JavaScript" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+
+<!--Import Google Icon Font-->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet" />
+<!--Import materialize.css-->
+<link type="text/css" rel="stylesheet"
+	href="materialize/css/materialize.min.css" media="screen,projection" />
+
+<script>
+	
+</script>
+</head>
+<body>
+
+
+    <nav>
+
+    <div class="nav-wrapper black">
+        <a class="navbar-brand">Sistema de Evento</a>
+      <a href="" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+      <ul class="right hide-on-med-and-down">
+       <li>Novo Evento<a href="/cadastrarEvento"
+			class="btn-floating btn-large waves-effect waves-light red btn-small"><i
+			class="material-icons">add</i></a></li>
+		<li>Sair<a href="/logout"
+			class="btn-floating btn-large waves-effect waves-light red btn-small"><i
+			class="material-icons">exit_to_app</i></a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <ul class="sidenav" id="mobile-demo">
+    <li><a href="/cadastrarEvento">Novo Evento</a></li>
+    <li><a href="/logout">Sair</a></li>
+ 
+  </ul>
+
+	<center>
+		<h4>Detalhes do Evento</h4>
+	</center>
+
+
+
+
+	<div th:each="evento :  ${evento}" class="container">
+
+		<div class="row">
+
+			<p>
+				Nome:<span th:text="${evento.nome}"></span>
+			</p>
+			<p>
+				Local:<span th:text="${evento.local}"></span>
+			</p>
+			<p>
+				Data:<span th:text="${evento.data}"></span>
+			</p>
+			<p>
+				Horário:<span th:text="${evento.horario}"></span>
+			</p>
+
+		</div>
+
+        <th:block th:include="mensagemValidacao"></th:block>
+        
+		<form method="POST" th:object="${convidado}">
+
+			<div class="row">
+
+				<div class="input-field col s6">
+					<input id="nomeconvidado" type="text" name="nomeConvidado"
+						class="validate" /> <label for="loca">Nome do Convidado</label>
+				</div>
+
+
+				<div class="input-field col s3">
+					<input id="rg" type="text" name="rg" class="validate" /> <label
+						for="data">RG</label>
+				</div>
+
+
+			</div>
+
+			<button class="btn waves-effect waves-light" type="submit"
+				name="action">
+				Adicionar <i class="material-icons right">send</i>
+			</button>
+
+		</form>
+
+	</div>
+	
+   <br/>
+  <center> <h5>Lista de Convidados</h5></center>
+	<table class="container">
+		<thead>
+			<tr>
+				<th>Nome</th>
+				<th>Rg</th>
+				<th>Deletar</th>
+			
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="convidado :${convidados}">
+				<td><span th:text="${convidado.nomeConvidado}"></span></td>
+				<td><span th:text="${convidado.rg}"></span></td>
+				<td><a th:href="${(#mvc.url('EC#deletarConvidado').arg(0,convidado.rg)).build()}"><i class="material-icons left">delete</i></a></td>
+				
+			</tr>
+		</tbody>
+
+	</table>
+
+
+
+
+</body>
+<script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</html>
